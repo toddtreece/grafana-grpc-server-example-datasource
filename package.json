@@ -1,7 +1,7 @@
 {
-  "name": "simple-datasource-backend",
+  "name": "grafana-grpc-server-query-example-datasource",
   "version": "1.0.0",
-  "description": "Grafana Data Source Backend Plugin Template",
+  "description": "Grafana GRPC Server Query Example",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
     "test": "grafana-toolkit plugin:test",
@@ -13,14 +13,13 @@
   "author": "Grafana Labs",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@grafana/data": "latest",
-    "@grafana/toolkit": "latest",
-    "@grafana/runtime": "latest",
-    "@grafana/ui": "latest",
-    "@types/lodash": "latest"
+    "@grafana/data": "9.1.0",
+    "@grafana/toolkit": "9.1.0",
+    "@grafana/runtime": "9.1.0",
+    "@grafana/ui": "9.1.0"
   },
   "resolutions": {
-    "rxjs": "7.3.0"
+    "rxjs": "7.5.6"
   },
   "engines": {
     "node": ">=14"

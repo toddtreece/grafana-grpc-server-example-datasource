@@ -1,11 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
   "type": "datasource",
-  "name": "Grafana Data Source Backend Plugin Template",
-  "id": "myorgid-simple-backend-datasource",
+  "name": "GRPC Server",
+  "id": "grafana-grpc-server-example-datasource",
   "metrics": true,
   "backend": true,
-  "executable": "gpx_simple_datasource_backend",
+  "executable": "gpx_grpc_server_example_datasource",
 
   "info": {
     "description": "Grafana Data Source Backend Plugin Template",
@@ -17,16 +17,13 @@
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
-    "links": [
-      {"name": "Website", "url": "https://github.com/grafana/grafana-starter-datasource-backend"},
-      {"name": "License", "url": "https://github.com/grafana/grafana-starter-datasource-backend/blob/master/LICENSE"}
-    ],
+    "links": [],
     "screenshots": [],
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },
   "dependencies": {
-    "grafanaDependency": ">=7.0.0",
+    "grafanaDependency": ">=9.1.0",
     "plugins": []
   }
 }

@@ -1,58 +1,28 @@
-import { defaults } from 'lodash';
-
-import React, { ChangeEvent, PureComponent, SyntheticEvent } from 'react';
-import { LegacyForms } from '@grafana/ui';
-import { QueryEditorProps } from '@grafana/data';
+import React from 'react';
+import { QueryEditorProps, DataSourceInstanceSettings, DataSourceRef } from '@grafana/data';
 import { DataSource } from './datasource';
-import { defaultQuery, MyDataSourceOptions, MyQuery } from './types';
+import { GRPCServerDataSourceOptions, GRPCServerQuery } from './types';
+import { DataSourcePicker } from '@grafana/runtime';
 
-const { FormField, Switch } = LegacyForms;
+type Props = QueryEditorProps<DataSource, GRPCServerQuery, GRPCServerDataSourceOptions>;
 
-type Props = QueryEditorProps<DataSource, MyQuery, MyDataSourceOptions>;
-
-export class QueryEditor extends PureComponent<Props> {
-  onQueryTextChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { onChange, query } = this.props;
-    onChange({ ...query, queryText: event.target.value });
+export function QueryEditor (props: Props) {  
+  const onDataSourceChange = (ref: DataSourceRef) => {
+    const { onChange, query } = props;
+    onChange({ ...query, datasource: ref, target_datasource: ref });
   };
 
-  onConstantChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { onChange, query, onRunQuery } = this.props;
-    onChange({ ...query, constant: parseFloat(event.target.value) });
-    // executes the query
-    onRunQuery();
-  };
-
-  onWithStreamingChange = (event: SyntheticEvent<HTMLInputElement>) => {
-    const { onChange, query, onRunQuery } = this.props;
-    onChange({ ...query, withStreaming: event.currentTarget.checked });
-    // executes the query
-    onRunQuery();
-  };
-
-  render() {
-    const query = defaults(this.props.query, defaultQuery);
-    const { queryText, constant, withStreaming } = query;
+    const { datasource} = props.query;
 
     return (
-      <div className="gf-form">
-        <FormField
-          width={4}
-          value={constant}
-          onChange={this.onConstantChange}
-          label="Constant"
-          type="number"
-          step="0.1"
-        />
-        <FormField
-          labelWidth={8}
-          value={queryText || ''}
-          onChange={this.onQueryTextChange}
-          label="Query Text"
-          tooltip="Not used yet"
-        />
-        <Switch checked={withStreaming || false} label="Enable streaming (v8+)" onChange={this.onWithStreamingChange} />
-      </div>
+      <DataSourcePicker
+        filter={ds => ds.meta.id != "grafana-grpc-server-example-datasource"}
+        placeholder="Select a data source"
+        onChange={(newSettings: DataSourceInstanceSettings) => {
+          onDataSourceChange({ type: newSettings.type, uid: newSettings.uid });
+        }}
+        noDefault={true}
+        current={datasource?.type != "grafana-grpc-server-example-datasource" ? datasource : undefined}
+      />
     );
-  }
 }
