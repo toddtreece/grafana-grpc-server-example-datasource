@@ -1,18 +1,22 @@
-# Grafana Data Source Backend Plugin Template
+## gRPC Server query proxy example
 
-[![Build](https://github.com/grafana/grafana-starter-datasource-backend/workflows/CI/badge.svg)](https://github.com/grafana/grafana-datasource-backend/actions?query=workflow%3A%22CI%22)
+This demonstrates making `QueryDataRequest` calls from a backend plugin to the experimental Grafana gRPC server by proxying queries through this plugin and modifying the datasource ref.
 
-This template is a starting point for building Grafana Data Source Backend Plugins
+In the grafana repo:
+```
+git fetch
+git checkout toddtreece/grpc-server-plugin-protobuf
+```
 
-## What is Grafana Data Source Backend Plugin?
+`grafana.ini` changes:
 
-Grafana supports a wide range of data sources, including Prometheus, MySQL, and even Datadog. There’s a good chance you can already visualize metrics from the systems you have set up. In some cases, though, you already have an in-house metrics solution that you’d like to add to your Grafana dashboards. Grafana Data Source Plugins enables integrating such solutions with Grafana.
+```ini
+[feature_toggles]
+grpcServer = true
+```
 
-For more information about backend plugins, refer to the documentation on [Backend plugins](https://grafana.com/docs/grafana/latest/developers/plugins/backend/).
+[Example Query](https://user-images.githubusercontent.com/360020/192410785-cc0913eb-139c-4783-b48c-db8e97f0dc55.webm)
 
-## Getting started
-
-A data source backend plugin consists of both frontend and backend components.
 
 ### Frontend
 
