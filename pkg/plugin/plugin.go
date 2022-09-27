@@ -86,6 +86,7 @@ func (d *GRPCServerQueryDatasource) setDataSourceFromTarget(ctx context.Context,
 
 		parsed["datasource"] = parsed["target_datasource"]
 		delete(parsed, "target_datasource")
+		delete(parsed, "datasourceId")
 		log.DefaultLogger.Info("parsed query", "parsed", parsed)
 		raw, err := json.Marshal(&parsed)
 		if err != nil {

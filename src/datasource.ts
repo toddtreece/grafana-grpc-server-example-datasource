@@ -9,8 +9,11 @@ export class DataSource extends DataSourceWithBackend<GRPCServerQuery, GRPCServe
   }
   
   query(request: DataQueryRequest<GRPCServerQuery>): Observable<DataQueryResponse> {
-    request.targets = request.targets.map((target) => ({...target, datasource:{type: this.type, uid: this.uid}, datasourceId: undefined}))
-    console.log(this.type, this.uid, request.targets);
-    return super.query(request);
+    let newReq = {
+      ...request,
+      targets: request.targets.map((target) => ({...target, datasource:{type: this.type, uid: this.uid}, datasourceId: undefined}))
+    };
+    console.log(this.type, this.uid, newReq.targets);
+    return super.query(newReq);
   }
 }
