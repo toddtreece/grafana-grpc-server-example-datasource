@@ -64,7 +64,6 @@ func (d *GRPCServerQueryDatasource) CheckHealth(_ context.Context, req *backend.
 
 func (d *GRPCServerQueryDatasource) addAuthToContext(ctx context.Context) context.Context {
 	md, ok := metadata.FromIncomingContext(ctx)
-	log.DefaultLogger.Debug("metadata", "md", md)
 	if !ok {
 		return ctx
 	}
