@@ -7,8 +7,7 @@ import (
 )
 
 type Settings struct {
-	Token string `json:"-"`
-	URL   string `json:"url"`
+	URL string `json:"url"`
 }
 
 func Load(settings backend.DataSourceInstanceSettings) *Settings {
@@ -19,6 +18,5 @@ func Load(settings backend.DataSourceInstanceSettings) *Settings {
 	if s.URL == "" {
 		s.URL = "localhost:10000"
 	}
-	s.Token = settings.DecryptedSecureJSONData["token"]
 	return s
 }

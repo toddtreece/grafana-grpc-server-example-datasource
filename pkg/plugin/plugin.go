@@ -56,13 +56,6 @@ func (d *GRPCServerQueryDatasource) CheckHealth(_ context.Context, req *backend.
 		}, nil
 	}
 
-	if d.settings.Token == "" {
-		return &backend.CheckHealthResult{
-			Status:  backend.HealthStatusError,
-			Message: "No Token configured",
-		}, nil
-	}
-
 	return &backend.CheckHealthResult{
 		Status:  backend.HealthStatusOk,
 		Message: "Data source is working",
@@ -70,9 +63,11 @@ func (d *GRPCServerQueryDatasource) CheckHealth(_ context.Context, req *backend.
 }
 
 func (d *GRPCServerQueryDatasource) addAuthToContext(ctx context.Context) context.Context {
-	md := metadata.New(map[string]string{
-		"authorization": "Bearer " + d.settings.Token,
-	})
+	md, ok := metadata.FromIncomingContext(ctx)
+	log.DefaultLogger.Debug("metadata", "md", md)
+	if !ok {
+		return ctx
+	}
 	return metadata.NewOutgoingContext(ctx, md)
 }
 

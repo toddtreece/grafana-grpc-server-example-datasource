@@ -7,7 +7,3 @@ export interface GRPCServerQuery extends DataQuery {
 export interface GRPCServerDataSourceOptions extends DataSourceJsonData {
   url?: string;
 }
-
-export interface GRPCServerSecureData {
-  token?: string;
-}
